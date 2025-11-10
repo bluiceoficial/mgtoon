@@ -1,6 +1,6 @@
-# MGToon
+# MGTOON
 
-MGToon é uma biblioteca para trabalhar com Token-Oriented Object Notation no PHP.
+MGTOON é uma biblioteca para trabalhar com Token-Oriented Object Notation no PHP.
 
 ## Installation
 
@@ -9,12 +9,12 @@ MGToon é uma biblioteca para trabalhar com Token-Oriented Object Notation no PH
 ## Example
 
 ```
-use MGToon\MGToon;
+use MGTOON\MGTOON;
 
 include_once(__DIR__ . '/vendor/autoload.php');
 
 // Added Fields and primary key "name"
-$toon = new MGToon('user', ['name', 'email', 'active'], 'name');
+$toon = new MGTOON('user', ['name', 'email', 'active'], 'name');
 
 // Added Items
 $toon->create(['name' => 'Maria', 'email' => 'maria@localhost', 'active' => 1]);
@@ -52,10 +52,10 @@ print_r($toon->validate($toon->toString(), 'name'));
 
 ## License
 
-The MGToon is provided under:
+The MGTOON is provided under:
 
 [SPDX-License-Identifier: LGPL-2.1-only](https://github.com/mugomes/mgtoon/blob/main/LICENSE)
 
 Beign under the terms of the GNU Lesser General Public License version 2.1 only.
 
-All contributions to the MGToon are subject to this license.
+All contributions to the MGTOON are subject to this license.
