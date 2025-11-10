@@ -1,0 +1,22 @@
+{
+    "name": "mugomes/mgtoon",
+    "type": "library",
+    "version": "1.0.0",
+    "description": "Biblioteca para trabalhar com Token-Oriented Object Notation.",
+    "authors": [
+        {
+            "name": "Murilo Gomes Julio",
+            "email": "mugomesoficial@gmail.com",
+            "homepage": "https://mugomes.github.io"
+        }
+    ],
+    "license": "LGPL-2.1-only",
+    "_comment": [
+        "Copyright (C) 2025 Murilo Gomes Julio"
+    ],
+    "autoload": {
+        "psr-4": {
+            "MGToon\\": "src/"
+        }
+    }
+}
