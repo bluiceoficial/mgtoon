@@ -5,9 +5,9 @@
 
 // Site: https://mugomes.github.io
 
-namespace MGToon;
+namespace MGTOON;
 
-class MGToon
+class MGTOON
 {
     private string $type;
     private array $fields = [];
