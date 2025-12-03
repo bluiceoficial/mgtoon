@@ -13,12 +13,23 @@ use MGTOON\MGTOON;
 
 include_once(__DIR__ . '/vendor/autoload.php');
 
+
+$toon = new MGTOON();
+
+// Load TOON and primary key "name"
+$toon->loadFile(__DIR__ . '/users.toon', 'name');
+
+// Load TOON string and primary key "name"
+$toon->loadTOON('user[name|email|active]
+Maria|maria@localhost|1
+João|joao@localhost|0', 'name');
+
 // Added Fields and primary key "name"
-$toon = new MGTOON('user', ['name', 'email', 'active'], 'name');
+$toon->create('user', ['name', 'email', 'active'], 'name');
 
 // Added Items
-$toon->create(['name' => 'Maria', 'email' => 'maria@localhost', 'active' => 1]);
-$toon->create(['name' => 'João', 'email' => 'joao@localhost', 'active' => 0]);
+$toon->add(['name' => 'Maria', 'email' => 'maria@localhost', 'active' => 1]);
+$toon->add(['name' => 'João', 'email' => 'joao@localhost', 'active' => 0]);
 
 // Query
 echo "\nQuery\n";
@@ -43,12 +54,15 @@ print_r($toon->toString());
 // Validate
 echo "\n\nValidate\n";
 print_r($toon->validate($toon->toString(), 'name'));
+
+// Save File
+$toon->saveFile(__DIR__ . '/users.toon');
 ```
 
 ## Support
 
 - GitHub Sponsors: https://github.com/sponsors/mugomes/
-- More Options: https://mugomes.github.io/apoie.html
+- More Options: https://www.mugomes.com.br/apoie.html
 
 ## License
 
