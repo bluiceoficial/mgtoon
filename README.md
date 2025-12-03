@@ -13,7 +13,6 @@ use MGTOON\MGTOON;
 
 include_once(__DIR__ . '/vendor/autoload.php');
 
-
 $toon = new MGTOON();
 
 // Load TOON and primary key "name"
