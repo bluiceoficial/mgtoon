@@ -3,7 +3,7 @@
 // Copyright (C) 2025 Murilo Gomes Julio
 // SPDX-License-Identifier: LGPL-2.1-only
 
-// Site: https://mugomes.github.io
+// Site: https://www.mugomes.com.br
 
 namespace MGTOON;
 
@@ -14,7 +14,20 @@ class MGTOON
     private array $records = [];
     private string $primaryKey;
 
-    public function __construct(string $type, array $fields = [], string $primaryKey = 'id')
+    public function loadFile(string $filename, string $primaryKey = 'id') {
+        $sTOON = file_get_contents($filename);
+        $this->loadTOON($sTOON, $primaryKey);
+    }
+
+    public function loadTOON(string $toon, string $primaryKey = 'id') {
+        $toon = self::parse($toon, $primaryKey);
+        $this->type = $toon->type;
+        $this->fields = $toon->fields;
+        $this->records = $toon->records;
+        $this->primaryKey = $toon->primaryKey;
+    }
+
+    public function create(string $type, array $fields = [], string $primaryKey = 'id')
     {
         try {
             $this->type = $type;
@@ -47,7 +60,8 @@ class MGTOON
 
             $type = $matches[1];
             $fields = array_map('trim', explode('|', $matches[2]));
-            $toon = new self($type, $fields, $primaryKey);
+            $toon = new self();
+            $toon->create($type, $fields, $primaryKey);
 
             for ($i = 1; $i < count($lines); $i++) {
                 $values = array_map('trim', explode('|', $lines[$i]));
@@ -71,7 +85,6 @@ class MGTOON
 
     public function toString(): string
     {
-        $lines = [];
         $lines[] = "{$this->type}[" . implode('|', $this->fields) . "]";
         foreach ($this->records as $record) {
             $values = [];
@@ -83,7 +96,7 @@ class MGTOON
         return implode("\n", $lines);
     }
 
-    public function create(array $record): array
+    public function add(array $record): array
     {
         try {
             $key = $this->primaryKey;
@@ -165,6 +178,10 @@ class MGTOON
             }
         }
         return false;
+    }
+
+    public function saveFile(string $filename) {
+        file_put_contents($filename, $this->toString());
     }
 
     public function validate(string $text, string $primaryKey = 'id'): array
