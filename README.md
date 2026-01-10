@@ -192,6 +192,7 @@ $toon->create('product', ['sku', 'name', 'price'], 'sku');
 **Murilo Gomes Julio**
 
 🔗 [https://mugomes.github.io](https://mugomes.github.io)
+
 📺 [https://youtube.com/@mugomesoficial](https://youtube.com/@mugomesoficial)
 
 ---
@@ -199,7 +200,6 @@ $toon->create('product', ['sku', 'name', 'price'], 'sku');
 ## 🤝 Support
 
 * GitHub Sponsors: [https://github.com/sponsors/mugomes](https://github.com/sponsors/mugomes)
-
 * Apoie o projeto: [https://mugomes.github.io/apoie.html](https://mugomes.github.io/apoie.html)
 
 ---
