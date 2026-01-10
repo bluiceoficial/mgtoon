@@ -1,74 +1,212 @@
 # MGTOON
 
-MGTOON é uma biblioteca para trabalhar com Token-Oriented Object Notation no PHP.
+**MGTOON** é uma biblioteca **leve e minimalista escrita em PHP** para trabalhar com arquivos no formato **TOON** (*Text-Oriented Object Notation*), um formato textual simples e humano para armazenamento estruturado de dados tabulares.
 
-## Installation
+Ela foi projetada para oferecer **CRUD completo**, **validação**, **serialização determinística** e **zero dependências**, sendo ideal para **CLIs**, **ferramentas internas**, **projetos embarcados**, **configurações** e **pequenos bancos de dados em texto puro**.
 
-`composer require mugomes/mgtoon`
+---
 
-## Example
+## ✨ Características
+
+* Formato de dados simples, legível e versionável
+* CRUD completo (`create`, `read`, `update`, `delete`)
+* Definição explícita de **chave primária**
+* Validação estrutural e semântica do TOON
+* Serialização consistente (`toString`)
+* Suporte a carregamento e salvamento em arquivos
+* Zero dependências externas
+* Compatível com **PHP 8.4 ou superior**
+* Ideal para substituir CSV, INI ou JSON simples
+
+---
+
+## 📄 Formato TOON
+
+Exemplo de um arquivo TOON:
+
+```text
+user[id|name|email]
+1|Pedro|pedro@email.com
+2|Ana|ana@email.com
+````
+
+### Estrutura
 
 ```
-use MGTOON\MGTOON;
+tipo[campo1|campo2|campo3]
+valor1|valor2|valor3
+valor1|valor2|valor3
+```
 
-include_once(__DIR__ . '/vendor/autoload.php');
+* A **primeira linha** define o tipo e os campos
+* As linhas seguintes são os registros
+* Um campo é definido como **chave primária**
+
+---
+
+## 📦 Instalação
+
+### Via Composer (recomendado)
+
+```bash
+composer require mugomes/mgtoon
+```
+
+### Manual
+
+Copie o arquivo `MGTOON.php` para o seu projeto e faça a inclusão manual.
+
+---
+
+## 🚀 Uso básico
+
+### Criar uma estrutura TOON
+
+```php
+<?php
+
+use MGTOON\MGTOON;
 
 $toon = new MGTOON();
 
-// Load TOON and primary key "name"
-$toon->loadFile(__DIR__ . '/users.toon', 'name');
+$toon->create('user', ['id', 'name', 'email'], 'id');
 
-// Load TOON string and primary key "name"
-$toon->loadTOON('user[name|email|active]
-Maria|maria@localhost|1
-João|joao@localhost|0', 'name');
+$toon->add([
+    'id' => 1,
+    'name' => 'Pedro',
+    'email' => 'pedro@email.com'
+]);
 
-// Added Fields and primary key "name"
-$toon->create('user', ['name', 'email', 'active'], 'name');
+$toon->add([
+    'id' => 2,
+    'name' => 'Ana',
+    'email' => 'ana@email.com'
+]);
 
-// Added Items
-$toon->add(['name' => 'Maria', 'email' => 'maria@localhost', 'active' => 1]);
-$toon->add(['name' => 'João', 'email' => 'joao@localhost', 'active' => 0]);
-
-// Query
-echo "\nQuery\n";
-print_r($toon->read());
-
-// Update
-echo "\n\nUpdate\n";
-$toon->update('Maria', ['active' => 0]);
-
-// Read
-echo "\n\nRead\n";
-print_r($toon->read('Maria'));
-
-// Delete
-echo "\n\nDelete\n";
-$toon->delete('João');
-
-// TOON
-echo "\nTOON\n";
-print_r($toon->toString());
-
-// Validate
-echo "\n\nValidate\n";
-print_r($toon->validate($toon->toString(), 'name'));
-
-// Save File
-$toon->saveFile(__DIR__ . '/users.toon');
+echo $toon->toString();
 ```
 
-## Support
+---
 
-- GitHub Sponsors: https://github.com/sponsors/mugomes/
-- More Options: https://www.mugomes.com.br/apoie.html
+## 📂 Trabalhando com arquivos
 
-## License
+### Carregar arquivo
 
-The MGTOON is provided under:
+```php
+$toon = new MGTOON();
+$toon->loadFile('users.toon', 'id');
+```
 
-[SPDX-License-Identifier: LGPL-2.1-only](https://github.com/mugomes/mgtoon/blob/main/LICENSE)
+### Salvar em arquivo
 
-Beign under the terms of the GNU Lesser General Public License version 2.1 only.
+```php
+$toon->saveFile('users.toon');
+```
 
-All contributions to the MGTOON are subject to this license.
+---
+
+## 📖 Leitura de dados
+
+### Ler todos os registros
+
+```php
+$records = $toon->read();
+```
+
+### Ler por chave primária
+
+```php
+$user = $toon->read('1');
+```
+
+---
+
+## ✏️ Atualização
+
+```php
+$toon->update('1', [
+    'email' => 'novo@email.com'
+]);
+```
+
+* Apenas campos definidos no cabeçalho são atualizados
+* Campos inexistentes são ignorados
+
+---
+
+## ❌ Exclusão
+
+```php
+$toon->delete('2');
+```
+
+---
+
+## 🧪 Validação
+
+É possível validar um conteúdo TOON sem carregá-lo:
+
+```php
+$result = $toon->validate($text);
+
+if ($result['valid']) {
+    echo 'TOON válido';
+} else {
+    echo $result['error'];
+}
+```
+
+### O que é validado?
+
+* Estrutura do cabeçalho
+* Quantidade de colunas
+* Existência da chave primária
+* Duplicidade de valores da chave primária
+
+---
+
+## 🔐 Chave primária
+
+* Definida no momento da criação ou carregamento
+* Obrigatória em novos registros
+* Não pode conter valores duplicados
+
+```php
+$toon->create('product', ['sku', 'name', 'price'], 'sku');
+```
+
+---
+
+## 🧠 Casos de uso ideais
+
+* Pequenos bancos de dados locais
+* Ferramentas CLI
+* Configurações versionáveis
+* Dados temporários ou embarcados
+* Alternativa simples a CSV/JSON
+
+---
+
+## 👤 Autor
+
+**Murilo Gomes Julio**
+
+🔗 [https://mugomes.github.io](https://mugomes.github.io)
+📺 [https://youtube.com/@mugomesoficial](https://youtube.com/@mugomesoficial)
+
+---
+
+## 🤝 Support
+
+* GitHub Sponsors: [https://github.com/sponsors/mugomes](https://github.com/sponsors/mugomes)
+* Apoie o projeto: [https://mugomes.github.io/apoie.html](https://mugomes.github.io/apoie.html)
+
+---
+
+## 📜 License
+
+Copyright (c) 2025-2026 Murilo Gomes Julio
+
+Licensed under the [MIT](https://github.com/mugomes/mgtoon/blob/main/LICENSE).
+
+All contributions to the MiTemplate are subject to this license.
