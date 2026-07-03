@@ -1,7 +1,9 @@
 # MGTOON
 
-> [!NOTE]
-> This repository has been migrated to Codeberg, please see: https://codeberg.org/bluice/mgtoon
+<!-- Badge opcional para deixar claro visualmente -->
+![Status](https://img.shields.io/badge/status-arquivado--archived-red.svg)
+
+> **Aviso importante:** Este software foi **oficialmente arquivado** e não receberá mais atualizações, correções de bugs ou suporte para novas versões.
 
 **MGTOON** é uma biblioteca **leve e minimalista escrita em PHP** para trabalhar com arquivos no formato **TOON** (*Text-Oriented Object Notation*), um formato textual simples e humano para armazenamento estruturado de dados tabulares.
 
