@@ -3,7 +3,7 @@
 <!-- Badge opcional para deixar claro visualmente -->
 ![Status](https://img.shields.io/badge/status-arquivado--archived-red.svg)
 
-> **Aviso importante:** Este software foi **oficialmente arquivado** e não receberá mais atualizações, correções de bugs ou suporte para novas versões.
+> **Aviso importante:** Está biblioteca foi **oficialmente arquivada** e não receberá mais atualizações, correções de bugs ou suporte para novas versões.
 
 **MGTOON** é uma biblioteca **leve e minimalista escrita em PHP** para trabalhar com arquivos no formato **TOON** (*Text-Oriented Object Notation*), um formato textual simples e humano para armazenamento estruturado de dados tabulares.
 
